@@ -22,30 +22,36 @@ const FormGenrePage = (props) => {
     }
   }
 
+  const add = () => {
+    axios
+      .post("/api/genres", {
+        name: form.name,
+      })
+      .then((res) => {
+        setSuccess(true)
+      })
+  }
+
+  const update = () => {
+    axios
+      .put(`/api/genres/${form.id}`, {
+        name: form.name,
+      })
+      .then((res) => {
+        setSuccess(true)
+      })
+  }
+
   const onChange = (event) => {
     const name = event.target.value
     setForm({ ...form, name })
   }
 
   const onSave = () => {
-    const name = form.name
-
     if (form.id) {
-      axios
-        .put(`/api/genres/${form.id}`, {
-          name,
-        })
-        .then((res) => {
-          setSuccess(true)
-        })
+      update()
     } else {
-      axios
-        .post("/api/genres", {
-          name,
-        })
-        .then((res) => {
-          setSuccess(true)
-        })
+      add()
     }
   }
 
