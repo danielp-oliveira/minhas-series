@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 
 import {
   Navbar,
@@ -11,12 +11,17 @@ import {
 } from "reactstrap"
 
 function App() {
+  const [open, setOpen] = useState(false)
+  const toggle = () => {
+    setOpen(!open)
+  }
+
   return (
     <div>
       <Navbar color="light" light expand="md">
         <NavbarBrand>Minhas Séries</NavbarBrand>
-        <NavbarToggler />
-        <Collapse isOpen={true} navbar>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={open} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
               <NavLink href="/">Genêros</NavLink>
