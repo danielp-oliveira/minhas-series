@@ -4,7 +4,7 @@ import { Redirect, Link } from "react-router-dom"
 import { FaArrowLeft as ArrowLeft, FaSave as Save } from "react-icons/fa"
 import { Button, Container, Form, FormGroup, Label, Input } from "reactstrap"
 
-const FormGenrePage = (props) => {
+const FormSeriePage = (props) => {
   const [form, setForm] = useState({ id: null, name: "" })
   const [success, setSuccess] = useState(false)
 
@@ -16,7 +16,7 @@ const FormGenrePage = (props) => {
 
   const getById = (id) => {
     if (id) {
-      axios.get(`/api/genres/${id}`).then(({ data }) => {
+      axios.get(`/api/series/${id}`).then(({ data }) => {
         setForm({ ...data })
       })
     }
@@ -24,7 +24,7 @@ const FormGenrePage = (props) => {
 
   const add = () => {
     axios
-      .post("/api/genres", {
+      .post("/api/series", {
         name: form.name,
       })
       .then((res) => {
@@ -34,7 +34,7 @@ const FormGenrePage = (props) => {
 
   const update = () => {
     axios
-      .put(`/api/genres/${form.id}`, {
+      .put(`/api/series/${form.id}`, {
         name: form.name,
       })
       .then((res) => {
@@ -56,20 +56,20 @@ const FormGenrePage = (props) => {
   }
 
   if (success) {
-    return <Redirect to="/genres" />
+    return <Redirect to="/series" />
   }
 
   return (
     <Container>
-      <h1>{form.id ? "Editar Gênero" : "Novo Gênero"}</h1>
+      <h1>{form.id ? "Editar Série" : "Nova Série"}</h1>
       <Form>
         <FormGroup>
-          <Label for="genre-name">Nome</Label>
+          <Label for="serie-name">Nome</Label>
           <Input
             type="text"
             name="nome"
-            id="genre-name"
-            placeholder="Nome do Genêro"
+            id="serie-name"
+            placeholder="Nome da Série"
             value={form.name}
             onChange={onChange}
           />
@@ -77,7 +77,7 @@ const FormGenrePage = (props) => {
         <Button
           color="link"
           tag={Link}
-          to="/genres"
+          to="/series"
           className="d-inline-flex align-items-center mr-3"
         >
           <ArrowLeft className="mr-2" /> Voltar
@@ -94,4 +94,4 @@ const FormGenrePage = (props) => {
   )
 }
 
-export default FormGenrePage
+export default FormSeriePage
