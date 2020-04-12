@@ -5,7 +5,7 @@ import { FaArrowLeft as ArrowLeft, FaSave as Save } from "react-icons/fa"
 import { Button, Container, Form, FormGroup, Label, Input } from "reactstrap"
 
 const FormGenrePage = (props) => {
-  const [form, setForm] = useState({ id: null, name: "" })
+  const [data, setData] = useState({ id: null, name: "" })
   const [success, setSuccess] = useState(false)
 
   const id = props.match.params.id
@@ -17,7 +17,7 @@ const FormGenrePage = (props) => {
   const getById = (id) => {
     if (id) {
       axios.get(`/api/genres/${id}`).then(({ data }) => {
-        setForm({ ...data })
+        setData({ ...data })
       })
     }
   }
@@ -25,7 +25,7 @@ const FormGenrePage = (props) => {
   const add = () => {
     axios
       .post("/api/genres", {
-        name: form.name,
+        name: data.name,
       })
       .then((res) => {
         setSuccess(true)
@@ -34,8 +34,8 @@ const FormGenrePage = (props) => {
 
   const update = () => {
     axios
-      .put(`/api/genres/${form.id}`, {
-        name: form.name,
+      .put(`/api/genres/${data.id}`, {
+        name: data.name,
       })
       .then((res) => {
         setSuccess(true)
@@ -44,11 +44,11 @@ const FormGenrePage = (props) => {
 
   const onChange = (event) => {
     const name = event.target.value
-    setForm({ ...form, name })
+    setData({ ...data, name })
   }
 
   const onSave = () => {
-    if (form.id) {
+    if (data.id) {
       update()
     } else {
       add()
@@ -61,7 +61,7 @@ const FormGenrePage = (props) => {
 
   return (
     <Container>
-      <h1>{form.id ? "Editar Gênero" : "Novo Gênero"}</h1>
+      <h1 className="my-5">{data.id ? "Editar Gênero" : "Novo Gênero"}</h1>
       <Form>
         <FormGroup>
           <Label for="genre-name">Nome</Label>
@@ -70,7 +70,7 @@ const FormGenrePage = (props) => {
             name="nome"
             id="genre-name"
             placeholder="Nome do Genêro"
-            value={form.name}
+            value={data.name}
             onChange={onChange}
           />
         </FormGroup>
